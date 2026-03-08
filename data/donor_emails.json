@@ -1,0 +1,122 @@
+[
+    {
+        "id": "email_001",
+        "subject": "Thank You for Your Generous Donation!",
+        "from": "Sarah Mitchell <sarah@greenfuture.org>",
+        "to": "donor@example.com",
+        "date": "2024-01-15",
+        "body": "Dear Friend,\n\nThank you so much for your generous donation of $500 to Green Future Foundation. Your contribution will directly fund our urban tree-planting initiative in underserved neighborhoods. Because of donors like you, we were able to plant over 2,000 trees last year alone, improving air quality and providing shade for communities that need it most.\n\nAs a token of our appreciation, you will receive our quarterly impact newsletter. Your donation is also fully tax-deductible under IRS Section 501(c)(3). Please keep this letter as your official receipt.\n\nWith gratitude,\nSarah Mitchell\nDirector of Development, Green Future Foundation"
+    },
+    {
+        "id": "email_002",
+        "subject": "Grant Award Announcement — Community Health Initiative",
+        "from": "grants@healthbridge.org",
+        "to": "programs@nonprofitpartner.org",
+        "date": "2024-02-03",
+        "body": "Dear Programs Team,\n\nWe are thrilled to inform you that HealthBridge Foundation has awarded your organization a grant of $25,000 for the Community Health Initiative. This grant is designated for the purchase of mobile medical equipment and the training of 50 community health workers over the next 12 months.\n\nGrantees are required to submit quarterly progress reports by the 15th of each quarter. A final impact report must be submitted within 30 days of the grant period ending. Failure to comply with reporting requirements may affect future funding eligibility.\n\nFunds will be disbursed in two equal installments: the first upon signing the grant agreement, and the second upon receipt of the mid-year progress report.\n\nSincerely,\nGrants Management Team\nHealthBridge Foundation"
+    },
+    {
+        "id": "email_003",
+        "subject": "Urgent: Year-End Fundraising Campaign — Help Us Reach Our Goal!",
+        "from": "campaign@hopehouse.org",
+        "to": "supporters@example.com",
+        "date": "2024-12-20",
+        "body": "Dear Supporter,\n\nWe have just 11 days left in our year-end campaign and we are $15,000 away from our $100,000 goal. Every dollar raised before December 31 will be matched dollar-for-dollar by our generous Board of Directors — effectively doubling your impact!\n\nThis year, Hope House provided emergency shelter to 1,200 individuals and families, offered job training to 350 adults, and served over 45,000 meals in our community kitchen. None of this is possible without your support.\n\nTo donate, visit our secure online portal at www.hopehouse.org/donate or send a check to Hope House, 123 Elm Street, Chicago, IL 60601. Donations must be received by December 31 to qualify for a 2024 tax deduction.\n\nThank you for standing with us,\nThe Hope House Team"
+    },
+    {
+        "id": "email_004",
+        "subject": "Volunteer Orientation — This Saturday at 10 AM",
+        "from": "volunteers@literacyfirst.org",
+        "to": "newvolunteer@example.com",
+        "date": "2024-03-12",
+        "body": "Dear New Volunteer,\n\nWelcome to the Literacy First family! We are so excited to have you join our team of dedicated literacy coaches. This is a reminder that your volunteer orientation is scheduled for this Saturday, March 16, at 10:00 AM at our main office: 456 Oak Avenue, Suite 200, Boston, MA 02108.\n\nDuring orientation you will learn about our tutoring curriculum, be matched with your first student, and complete mandatory background check documentation. Please bring a valid government-issued photo ID.\n\nAll volunteers are expected to commit to a minimum of 2 hours per week for at least 6 months. Regular attendance is critical for our students' progress. If you need to reschedule, please contact us at least 48 hours in advance.\n\nSee you Saturday!\nThe Literacy First Volunteer Coordination Team"
+    },
+    {
+        "id": "email_005",
+        "subject": "Annual Impact Report 2023 — A Year of Transformation",
+        "from": "communications@bridgeofhope.org",
+        "to": "stakeholders@example.com",
+        "date": "2024-01-30",
+        "body": "Dear Valued Stakeholder,\n\nWe are proud to share our 2023 Annual Impact Report. This past year, Bridge of Hope served 8,500 individuals across 12 counties, expanded our mental health counseling program to 3 new sites, and launched a microloan program that disbursed $180,000 to 45 small business owners — 80% of whom were women.\n\nOur financials reflect strong stewardship: 87 cents of every dollar raised went directly to programs, with only 13% allocated to administration and fundraising. This ratio exceeds the Better Business Bureau's Wise Giving Alliance standard of 65% program expenditure.\n\nTotal revenue for 2023 was $2.3 million, with 52% coming from individual donors, 31% from foundation grants, 12% from government contracts, and 5% from earned income. We ended the year with a healthy 5-month operating reserve.\n\nThank you for making this work possible.\nBridge of Hope Leadership Team"
+    },
+    {
+        "id": "email_006",
+        "subject": "Sponsorship Opportunity — Annual Gala 2024",
+        "from": "events@childrensfund.org",
+        "to": "corporate.sponsor@company.com",
+        "date": "2024-04-05",
+        "body": "Dear Corporate Partner,\n\nThe Children's Education Fund invites your company to become a sponsor of our 20th Annual Gala, to be held on June 14, 2024 at the Grand Hyatt Ballroom, New York City. This black-tie event will host 300 community leaders, philanthropists, and business executives.\n\nSponsorship tiers are as follows:\n- Platinum ($25,000): Table for 10, prime logo placement, keynote speaking slot, social media feature\n- Gold ($15,000): Table for 8, program logo placement, social media shoutout\n- Silver ($7,500): 4 tickets, website logo placement\n- Friend ($2,500): 2 tickets, program recognition\n\nAll sponsorships are tax-deductible to the fullest extent permitted by law. Proceeds fund college scholarships for low-income students. Last year's gala raised $420,000 and funded 28 full scholarships.\n\nPlease RSVP by May 15 to confirm your sponsorship. We look forward to celebrating 20 years of impact with you!\n\nWarm regards,\nEvents Team\nChildren's Education Fund"
+    },
+    {
+        "id": "email_007",
+        "subject": "Important Update: Changes to Our Donation Processing",
+        "from": "admin@urbanrescue.org",
+        "to": "donors@urbansrescue.org",
+        "date": "2024-05-10",
+        "body": "Dear Donor,\n\nWe are writing to inform you of an important change to how we process recurring donations. Effective July 1, 2024, Urban Rescue Mission will transition to a new payment platform, PaySafe Nonprofit. This change will provide enhanced security, lower processing fees (saving us approximately $8,000 per year), and a better donor portal experience.\n\nIf you have an active recurring donation, you will receive a separate email from PaySafe Nonprofit asking you to re-enter your payment information. This is a one-time step. Your donation amount and frequency will remain unchanged. If you do not complete this step by June 30, your recurring gift will be paused until your payment information is updated.\n\nWe deeply appreciate your patience and continued support. For questions, contact our Donor Services team at donors@urbanrescue.org or call (312) 555-0192 Monday–Friday, 9 AM–5 PM CT.\n\nThank you,\nUrban Rescue Mission Administration"
+    },
+    {
+        "id": "email_008",
+        "subject": "Matching Gift Opportunity — Double Your Impact Today",
+        "from": "giving@stemforgirls.org",
+        "to": "supporters@example.com",
+        "date": "2024-09-18",
+        "body": "Dear Friend,\n\nAn anonymous donor has pledged to match every gift made to STEM for Girls this month up to a total of $50,000. That means your donation today is worth twice as much!\n\nSTEM for Girls provides after-school coding, robotics, and science programs to girls from low-income households in grades 4–8. This year, 1,400 girls participated in our programs, and 94% reported increased confidence in math and science. Our alumni have gone on to study computer science, engineering, and medicine at universities across the country.\n\nA gift of $50 provides one month of program materials for a student. A gift of $250 covers a full semester of coding classes. A gift of $1,000 sponsors an entire year of STEM education for one girl.\n\nDonate before September 30 to take advantage of the match. Visit stemforgirls.org/match or text STEM to 50155.\n\nInspired by the future,\nThe STEM for Girls Team"
+    },
+    {
+        "id": "email_009",
+        "subject": "Board Recruitment — Join Our Mission",
+        "from": "governance@foodbank.org",
+        "to": "community.leaders@example.com",
+        "date": "2024-06-22",
+        "body": "Dear Community Leader,\n\nThe Regional Food Bank is seeking passionate and skilled individuals to join our Board of Directors. As a board member, you will provide strategic oversight, ambassador outreach, and fiduciary governance for an organization that distributes over 4 million pounds of food annually to families in need.\n\nWe are seeking candidates with expertise in: financial management, legal affairs, marketing and communications, healthcare, or social services. Board members serve 3-year terms and are expected to attend quarterly board meetings, participate in at least one committee, make a personal annual gift (at any level), and assist in fundraising.\n\nThe Regional Food Bank is a 501(c)(3) organization and has earned Charity Navigator's top 4-star rating for 8 consecutive years. If you are interested or would like to nominate someone, please submit a brief bio and letter of interest to governance@foodbank.org by August 1.\n\nThank you for considering this opportunity to serve your community.\nGovernance Committee\nRegional Food Bank"
+    },
+    {
+        "id": "email_010",
+        "subject": "Program Update: Youth Mentorship Cohort 7 Launches",
+        "from": "programs@bigbrotherssister.org",
+        "to": "donors@bigbrotherssister.org",
+        "date": "2024-08-05",
+        "body": "Dear Donor,\n\nWe are excited to announce the launch of Cohort 7 of our Youth Mentorship Program! This cohort includes 85 mentor-mentee pairs, our largest to date. Each pair commits to meeting at least 4 hours per month for a minimum of 12 months.\n\nResearch shows that youth with mentors are 55% more likely to enroll in college, 78% more likely to volunteer regularly, and 130% more likely to hold leadership positions. Our internal data from the first 6 cohorts shows that 91% of participants improved their school attendance, and 76% reported improved self-esteem.\n\nFunding for this cohort was made possible through a combination of individual donations ($120,000), a City of Chicago Community Development Block Grant ($75,000), and a United Way allocation ($40,000). Your support is what allows us to keep this program free for all participants.\n\nWatch for our cohort kickoff event highlights in next month's newsletter.\n\nWith appreciation,\nPrograms Team\nBig Brothers Big Sisters — Chicago Chapter"
+    },
+    {
+        "id": "email_011",
+        "subject": "Tax Receipts Now Available for 2023 Contributions",
+        "from": "finance@shelteralliance.org",
+        "to": "donors@shelteralliance.org",
+        "date": "2024-01-05",
+        "body": "Dear Donor,\n\nAs we enter tax season, we want to remind you that official tax receipts for all 2023 donations made to Shelter Alliance are now available in your donor portal at my.shelteralliance.org. You can download and print your receipt directly from the portal.\n\nShelter Alliance is a registered 501(c)(3) nonprofit organization, and all donations are tax-deductible to the full extent allowed by law. Our EIN is 47-1234567. Please consult your tax advisor regarding specific deductibility questions.\n\nIf you made a donation of $250 or more in a single gift, you should have received a written acknowledgment letter via email at the time of your donation, as required by IRS regulations. If you did not receive this letter, please contact us at finance@shelteralliance.org.\n\nThank you for your generosity and continued support of our mission to end homelessness in our region.\n\nSincerely,\nFinance Team\nShelter Alliance"
+    },
+    {
+        "id": "email_012",
+        "subject": "Planned Giving — Leave a Legacy",
+        "from": "legacy@artforall.org",
+        "to": "philanthropists@example.com",
+        "date": "2024-07-14",
+        "body": "Dear Friend of the Arts,\n\nHave you considered leaving a legacy gift to Arts for All? A bequest in your will or living trust is one of the most powerful ways to ensure that arts education remains accessible to future generations.\n\nLegacy gifts, also known as planned gifts, can take many forms: a specific dollar amount, a percentage of your estate, a beneficiary designation on a retirement account or life insurance policy, or a charitable remainder trust. Legacy donors become members of our Enduring Arts Legacy Society and receive exclusive benefits including annual recognition in our program guide, invitations to special artist events, and a signed print from our collection.\n\nPlanning a legacy gift does not require significant wealth — even a small percentage of your estate can make a lasting difference. We recommend discussing any planned gift with your financial advisor or estate attorney.\n\nTo learn more, contact our Planned Giving Coordinator at legacy@artforall.org or call (617) 555-0234. We are honored to help you create a meaningful legacy.\n\nWith deep gratitude,\nArts for All Leadership"
+    },
+    {
+        "id": "email_013",
+        "subject": "Emergency Appeal: Disaster Relief Fund",
+        "from": "relief@communityresponds.org",
+        "to": "supporters@example.com",
+        "date": "2024-11-02",
+        "body": "Dear Supporter,\n\nFollowing the devastating flooding in our region, Community Responds has activated its Emergency Disaster Relief Fund. Over 3,000 families have been displaced, and immediate needs include clean water, emergency shelter kits, hygiene supplies, and food.\n\nWe have teams on the ground and are coordinating with local emergency management agencies, the Red Cross, and FEMA. Our disaster response team has deployed 120 trained volunteers who are conducting door-to-door welfare checks and distributing supplies.\n\nYour emergency donation today will be used immediately — no bureaucracy, no delay. 95% of disaster relief donations go directly to affected families. We have already deployed $85,000 in the first 48 hours thanks to early donors.\n\nYou can donate at communityresponds.org/relief or text RELIEF to 90999. If you are able to volunteer, please register at our portal — we need help with logistics, translation, and childcare.\n\nThank you for responding when it matters most.\nEmergency Response Team\nCommunity Responds"
+    },
+    {
+        "id": "email_014",
+        "subject": "Donor Stewardship — How We Use Your Gift",
+        "from": "stewardship@envirowatch.org",
+        "to": "donors@envirowatch.org",
+        "date": "2024-10-08",
+        "body": "Dear Valued Donor,\n\nAt EnviroWatch, we believe transparency is a cornerstone of trust. This email shares exactly how your donation is being used and the difference it is making.\n\nFor every $1 donated to EnviroWatch: $0.72 goes to direct environmental monitoring programs, $0.15 goes to advocacy and policy work, $0.08 covers administrative costs, and $0.05 supports fundraising activities.\n\nIn Q3 2024, your support funded: installation of 12 new air quality monitoring stations across 4 counties, analysis of 6,500 water samples from 200 public wells, publication of 3 peer-reviewed research papers, and testimony before state legislature on clean water regulations.\n\nStewardship is not just a word — it is a commitment. We invite you to review our full quarterly financial report at envirowatch.org/transparency. Our books are independently audited annually.\n\nThank you for entrusting us with your philanthropic investment.\nStewardship Team\nEnviroWatch"
+    },
+    {
+        "id": "email_015",
+        "subject": "Recurring Donors — You Are Our Champions",
+        "from": "giving@pawsandhearts.org",
+        "to": "monthly.donors@pawsandhearts.org",
+        "date": "2024-02-14",
+        "body": "Dear Monthly Champion,\n\nHappy Valentine's Day from all of us — and the animals — at Paws & Hearts Animal Rescue! On this day of love, we want to take a moment to celebrate YOU, our incredible recurring donors.\n\nYour monthly gift creates stability that one-time donations simply cannot. Because of your predictable support, we were able to: rescue 1,847 animals this year, achieve a 96% live release rate (compared to the national average of 80%), expand our foster network to 320 active foster homes, and launch a free pet food pantry serving 150 low-income pet owners per month.\n\nRecurring donors like you represent only 18% of our donor base but contribute 43% of our total annual revenue. You are truly the backbone of our mission.\n\nAs a thank-you, we are giving all monthly donors early access to our Spring Adoption Event on March 15 — one week before the public opening. You will receive your exclusive invite next month.\n\nWith so much love and gratitude,\nThe Paws & Hearts Team"
+    }
+]

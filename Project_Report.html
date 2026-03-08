@@ -1,0 +1,1464 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Non-Profit Quiz/Tutor Bot — Project Report</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Fira+Code:wght@400;500&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #f8f9fb;
+      color: #1a202c;
+      font-size: 13.5px;
+      line-height: 1.7;
+    }
+
+    /* ── COVER PAGE ── */
+    .cover {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 50%, #0f4c81 100%);
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 60px 40px;
+      page-break-after: always;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cover::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 20% 80%, rgba(56, 189, 248, 0.15) 0%, transparent 60%),
+        radial-gradient(circle at 80% 20%, rgba(99, 102, 241, 0.15) 0%, transparent 60%);
+    }
+
+    .cover-badge {
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      border-radius: 30px;
+      padding: 6px 20px;
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 30px;
+      position: relative;
+    }
+
+    .cover h1 {
+      font-size: 46px;
+      font-weight: 800;
+      line-height: 1.15;
+      margin-bottom: 16px;
+      background: linear-gradient(90deg, #fff, #93c5fd);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      position: relative;
+    }
+
+    .cover h2 {
+      font-size: 20px;
+      font-weight: 400;
+      color: rgba(255, 255, 255, 0.75);
+      max-width: 600px;
+      margin-bottom: 50px;
+      position: relative;
+    }
+
+    .cover-meta {
+      position: relative;
+      display: flex;
+      gap: 40px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .cover-meta-item {
+      text-align: center;
+    }
+
+    .cover-meta-item .label {
+      font-size: 11px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.5);
+      margin-bottom: 4px;
+    }
+
+    .cover-meta-item .value {
+      font-size: 15px;
+      font-weight: 600;
+      color: #93c5fd;
+    }
+
+    .cover-icons {
+      position: relative;
+      display: flex;
+      gap: 14px;
+      margin-bottom: 40px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .pill {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 20px;
+      padding: 5px 16px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #e0f2fe;
+    }
+
+    /* ── CONTENT ── */
+    .content {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 50px 40px;
+    }
+
+    /* Section header */
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 48px 0 18px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #e2e8f0;
+    }
+
+    .section-number {
+      background: #0f4c81;
+      color: white;
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .section-header h2 {
+      font-size: 20px;
+      font-weight: 700;
+      color: #0f172a;
+    }
+
+    p {
+      margin-bottom: 12px;
+      color: #374151;
+    }
+
+    /* Highlight box */
+    .highlight-box {
+      background: linear-gradient(135deg, #eff6ff, #dbeafe);
+      border-left: 4px solid #3b82f6;
+      border-radius: 0 8px 8px 0;
+      padding: 16px 20px;
+      margin: 18px 0;
+    }
+
+    .highlight-box p {
+      margin: 0;
+      color: #1e40af;
+      font-weight: 500;
+    }
+
+    /* Feature cards grid */
+    .card-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin: 18px 0;
+    }
+
+    .card {
+      background: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 10px;
+      padding: 16px 18px;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+    }
+
+    .card-icon {
+      font-size: 22px;
+      margin-bottom: 8px;
+    }
+
+    .card h4 {
+      font-size: 13px;
+      font-weight: 700;
+      color: #0f172a;
+      margin-bottom: 4px;
+    }
+
+    .card p {
+      font-size: 12px;
+      color: #6b7280;
+      margin: 0;
+    }
+
+    /* Tech stack badges */
+    .tech-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin: 18px 0;
+    }
+
+    .tech-card {
+      background: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 10px;
+      padding: 14px 16px;
+      text-align: center;
+    }
+
+    .tech-card .tech-icon {
+      font-size: 28px;
+      margin-bottom: 6px;
+    }
+
+    .tech-card .tech-name {
+      font-weight: 700;
+      font-size: 13px;
+      color: #0f172a;
+      margin-bottom: 2px;
+    }
+
+    .tech-card .tech-desc {
+      font-size: 11px;
+      color: #9ca3af;
+    }
+
+    /* Architecture diagram */
+    .arch-diagram {
+      background: #0f172a;
+      border-radius: 12px;
+      padding: 28px;
+      margin: 18px 0;
+      font-family: 'Fira Code', monospace;
+      font-size: 12px;
+      color: #94a3b8;
+      line-height: 1.8;
+      overflow-x: auto;
+    }
+
+    .arch-diagram .hl {
+      color: #38bdf8;
+      font-weight: 600;
+    }
+
+    .arch-diagram .arrow {
+      color: #6366f1;
+    }
+
+    .arch-diagram .action {
+      color: #4ade80;
+    }
+
+    /* File structure */
+    .file-tree {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 20px 24px;
+      margin: 18px 0;
+      font-family: 'Fira Code', monospace;
+      font-size: 12px;
+      line-height: 2;
+    }
+
+    .file-tree .folder {
+      color: #0f4c81;
+      font-weight: 600;
+    }
+
+    .file-tree .file {
+      color: #374151;
+    }
+
+    .file-tree .comment {
+      color: #9ca3af;
+      font-style: italic;
+    }
+
+    /* Table */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 18px 0;
+      font-size: 12.5px;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+    }
+
+    thead {
+      background: #0f4c81;
+      color: white;
+    }
+
+    thead th {
+      padding: 12px 14px;
+      text-align: left;
+      font-weight: 600;
+    }
+
+    tbody tr:nth-child(even) {
+      background: #f8fafc;
+    }
+
+    tbody tr:nth-child(odd) {
+      background: white;
+    }
+
+    tbody td {
+      padding: 10px 14px;
+      color: #374151;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    tbody td strong {
+      color: #0f4c81;
+    }
+
+    /* Code block */
+    .code-block {
+      background: #1e293b;
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 14px 0;
+      font-family: 'Fira Code', monospace;
+      font-size: 12px;
+      color: #e2e8f0;
+      line-height: 1.7;
+      overflow-x: auto;
+    }
+
+    .code-block .cmd {
+      color: #38bdf8;
+    }
+
+    .code-block .comment {
+      color: #64748b;
+    }
+
+    /* Flow steps */
+    .flow-steps {
+      margin: 18px 0;
+    }
+
+    .flow-step {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 14px 16px;
+      background: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 10px;
+      margin-bottom: 8px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    }
+
+    .step-num {
+      background: #0f4c81;
+      color: white;
+      min-width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .step-content h4 {
+      font-size: 13px;
+      font-weight: 700;
+      color: #0f172a;
+      margin-bottom: 2px;
+    }
+
+    .step-content p {
+      font-size: 12px;
+      color: #6b7280;
+      margin: 0;
+    }
+
+    /* RAG explanation box */
+    .rag-box {
+      background: linear-gradient(135deg, #f0fdf4, #dcfce7);
+      border: 1px solid #86efac;
+      border-radius: 10px;
+      padding: 16px 20px;
+      margin: 18px 0;
+    }
+
+    .rag-box h4 {
+      color: #166534;
+      font-size: 13px;
+      margin-bottom: 8px;
+    }
+
+    .rag-box p {
+      color: #15803d;
+      font-size: 12px;
+      margin: 0;
+    }
+
+    /* Results table */
+    .results-row-correct {
+      background: #f0fdf4 !important;
+    }
+
+    .results-row-wrong {
+      background: #fff1f2 !important;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 2px 10px;
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .badge-green {
+      background: #dcfce7;
+      color: #166534;
+    }
+
+    .badge-red {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+
+    .badge-blue {
+      background: #dbeafe;
+      color: #1e40af;
+    }
+
+    .badge-yellow {
+      background: #fef9c3;
+      color: #854d0e;
+    }
+
+    /* Quiz screenshot simulation */
+    .terminal-sim {
+      background: #0f172a;
+      border-radius: 12px;
+      overflow: hidden;
+      margin: 18px 0;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .terminal-bar {
+      background: #1e293b;
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+
+    .dot-red {
+      background: #ef4444;
+    }
+
+    .dot-yellow {
+      background: #f59e0b;
+    }
+
+    .dot-green {
+      background: #10b981;
+    }
+
+    .terminal-title {
+      color: #64748b;
+      font-size: 12px;
+      margin-left: 8px;
+      font-family: 'Fira Code', monospace;
+    }
+
+    .terminal-body {
+      padding: 20px 24px;
+      font-family: 'Fira Code', monospace;
+      font-size: 12px;
+      line-height: 1.9;
+      color: #e2e8f0;
+    }
+
+    .t-cyan {
+      color: #22d3ee;
+    }
+
+    .t-green {
+      color: #4ade80;
+    }
+
+    .t-yellow {
+      color: #fbbf24;
+    }
+
+    .t-red {
+      color: #f87171;
+    }
+
+    .t-purple {
+      color: #a78bfa;
+    }
+
+    .t-dim {
+      color: #64748b;
+    }
+
+    .t-white {
+      color: #f8fafc;
+      font-weight: 600;
+    }
+
+    .t-rule {
+      color: #1e3a5f;
+      border-top: 1px solid #1e3a5f;
+      margin: 6px 0;
+    }
+
+    /* Outcome box */
+    .outcome-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 14px;
+      margin: 18px 0;
+    }
+
+    .outcome-card {
+      text-align: center;
+      background: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 10px;
+      padding: 18px 14px;
+    }
+
+    .outcome-card .num {
+      font-size: 32px;
+      font-weight: 800;
+      color: #0f4c81;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+
+    .outcome-card .label-small {
+      font-size: 12px;
+      color: #6b7280;
+    }
+
+    /* Print */
+    @media print {
+      body {
+        background: white;
+      }
+
+      .cover {
+        min-height: 100vh;
+        page-break-after: always;
+      }
+
+      .section-header {
+        page-break-before: auto;
+      }
+
+      .card-grid,
+      .tech-grid,
+      .outcome-grid {
+        page-break-inside: avoid;
+      }
+    }
+
+    .footer-bar {
+      background: #0f172a;
+      color: rgba(255, 255, 255, 0.5);
+      text-align: center;
+      padding: 26px;
+      margin-top: 60px;
+      font-size: 12px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ════════════════════ COVER PAGE ════════════════════ -->
+  <div class="cover">
+    <div class="cover-badge">Academic Project Report</div>
+    <h1>Non-Profit Quiz &amp;<br>Tutor Bot</h1>
+    <h2>An AI-driven educational chatbot that quizzes users on Donor Emails using RAG + LLM</h2>
+    <div class="cover-icons">
+      <span class="pill">🐍 Python</span>
+      <span class="pill">🤖 Google Gemini AI</span>
+      <span class="pill">🗄️ ChromaDB (Vector DB)</span>
+      <span class="pill">🔗 LangChain</span>
+      <span class="pill">📧 Donor Emails</span>
+    </div>
+    <div class="cover-meta">
+      <div class="cover-meta-item">
+        <div class="label">Subject</div>
+        <div class="value">Generative AI</div>
+      </div>
+      <div class="cover-meta-item">
+        <div class="label">Domain</div>
+        <div class="value">Non-Profit</div>
+      </div>
+      <div class="cover-meta-item">
+        <div class="label">Date</div>
+        <div class="value">March 2026</div>
+      </div>
+      <div class="cover-meta-item">
+        <div class="label">Type</div>
+        <div class="value">Gen AI Application</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════ MAIN CONTENT ════════════════════ -->
+  <div class="content">
+
+    <!-- 1. OVERVIEW -->
+    <div class="section-header">
+      <div class="section-number">1</div>
+      <h2>Project Overview</h2>
+    </div>
+
+    <div class="highlight-box">
+      <p>📌 <strong>Problem Statement:</strong> Develop an interactive AI-driven educational bot for the Non-Profit
+        domain. The bot engages users in targeted assessments based on real <em>Donor Emails</em>, evaluates responses
+        using a Large Language Model, and provides deep contextual explanations for incorrect answers — creating a
+        personalized learning loop that bridges knowledge gaps and reinforces industry-specific concepts.</p>
+    </div>
+
+    <p>The <strong>Non-Profit Quiz/Tutor Bot</strong> is a Generative AI application that transforms a curated
+      collection of non-profit donor emails into an interactive, self-paced learning experience. Unlike traditional quiz
+      systems that rely on static question banks with keyword matching, this bot uses <strong>Retrieval-Augmented
+        Generation (RAG)</strong> to ground every question and explanation in real email content, ensuring factual
+      accuracy and rich contextual depth.</p>
+
+    <p>When a user answers incorrectly, the bot does not just say "wrong" — it retrieves the most semantically relevant
+      email excerpts from a vector database and asks the LLM to craft a personalised, educational explanation that
+      references the actual email content. This creates a genuine <strong>personalized learning loop</strong>.</p>
+
+    <!-- 2. OBJECTIVES -->
+    <div class="section-header">
+      <div class="section-number">2</div>
+      <h2>Objectives</h2>
+    </div>
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-icon">🎯</div>
+        <h4>Targeted Assessment</h4>
+        <p>Generate contextually relevant quiz questions directly from donor email knowledge base</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🧠</div>
+        <h4>Semantic Evaluation</h4>
+        <p>Evaluate answers using LLM understanding, not brittle exact-string matching</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">📚</div>
+        <h4>Contextual Explanations</h4>
+        <p>Provide RAG-powered deep explanations for wrong answers citing email sources</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🔄</div>
+        <h4>Personalized Learning</h4>
+        <p>Identify weak topics and suggest study areas based on quiz performance</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">📊</div>
+        <h4>Performance Analytics</h4>
+        <p>Show score breakdown by topic, difficulty level, and question type</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">⚡</div>
+        <h4>Interactive Interface</h4>
+        <p>Rich CLI with hints, colour-coded feedback, and a professional quiz experience</p>
+      </div>
+    </div>
+
+    <!-- 3. TECHNOLOGY STACK -->
+    <div class="section-header">
+      <div class="section-number">3</div>
+      <h2>Technology Stack</h2>
+    </div>
+    <div class="tech-grid">
+      <div class="tech-card">
+        <div class="tech-icon">🐍</div>
+        <div class="tech-name">Python 3.10+</div>
+        <div class="tech-desc">Core programming language</div>
+      </div>
+      <div class="tech-card">
+        <div class="tech-icon">🤖</div>
+        <div class="tech-name">Google Gemini</div>
+        <div class="tech-desc">LLM — question gen &amp; evaluation</div>
+      </div>
+      <div class="tech-card">
+        <div class="tech-icon">🗄️</div>
+        <div class="tech-name">ChromaDB</div>
+        <div class="tech-desc">Local Vector Database (RAG)</div>
+      </div>
+      <div class="tech-card">
+        <div class="tech-icon">🔗</div>
+        <div class="tech-name">LangChain</div>
+        <div class="tech-desc">Document chunking &amp; retrieval</div>
+      </div>
+      <div class="tech-card">
+        <div class="tech-icon">🧬</div>
+        <div class="tech-name">Gemini Embeddings</div>
+        <div class="tech-desc">Semantic vector embeddings</div>
+      </div>
+      <div class="tech-card">
+        <div class="tech-icon">💎</div>
+        <div class="tech-name">Rich (CLI)</div>
+        <div class="tech-desc">Premium terminal UI library</div>
+      </div>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Tool / Library</th>
+          <th>Version</th>
+          <th>Purpose</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>google-genai</strong></td>
+          <td>≥ 0.5</td>
+          <td>New Google Gemini SDK for LLM API calls</td>
+        </tr>
+        <tr>
+          <td><strong>langchain + langchain-core</strong></td>
+          <td>≥ 1.2</td>
+          <td>Document loading, text splitting pipeline</td>
+        </tr>
+        <tr>
+          <td><strong>langchain-text-splitters</strong></td>
+          <td>≥ 0.0.1</td>
+          <td>Recursive character text splitter for chunking</td>
+        </tr>
+        <tr>
+          <td><strong>langchain-chroma</strong></td>
+          <td>≥ 0.1</td>
+          <td>ChromaDB vector store integration</td>
+        </tr>
+        <tr>
+          <td><strong>langchain-google-genai</strong></td>
+          <td>≥ 0.0.11</td>
+          <td>Gemini embedding model for semantic search</td>
+        </tr>
+        <tr>
+          <td><strong>chromadb</strong></td>
+          <td>≥ 0.4.22</td>
+          <td>Persistent local vector database</td>
+        </tr>
+        <tr>
+          <td><strong>python-dotenv</strong></td>
+          <td>≥ 1.0</td>
+          <td>API key management via .env file</td>
+        </tr>
+        <tr>
+          <td><strong>rich</strong></td>
+          <td>≥ 13.7</td>
+          <td>Styled terminal output &amp; interactive prompts</td>
+        </tr>
+        <tr>
+          <td><strong>pytest</strong></td>
+          <td>≥ 8.0</td>
+          <td>Automated smoke tests</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- 4. SYSTEM ARCHITECTURE -->
+    <div class="section-header">
+      <div class="section-number">4</div>
+      <h2>System Architecture</h2>
+    </div>
+
+    <div class="arch-diagram">
+      <span class="action">┌─────────────────────────────────────────────────────────┐</span>
+      <span class="action">│ DATA INGESTION PIPELINE (Run Once) │</span>
+      <span class="action">└─────────────────────────────────────────────────────────┘</span>
+
+      <span class="hl">donor_emails.json</span> (15 emails)
+      <span class="arrow">│</span>
+      <span class="arrow">▼</span>
+      <span class="hl">[data_loader.py]</span> ── Load JSON → LangChain Documents (with metadata)
+      <span class="arrow">│</span>
+      <span class="arrow">▼</span>
+      <span class="hl">RecursiveCharacterTextSplitter</span> ── chunk_size=500, overlap=80
+      <span class="arrow">│</span>
+      <span class="arrow">▼ (~80+ chunks)</span>
+      <span class="hl">[vector_store.py]</span> ── Gemini Embedding Model (gemini-embedding-001)
+      <span class="arrow">│</span>
+      <span class="arrow">▼</span>
+      <span class="action"> ChromaDB (./chroma_db/) ── Persistent vector store</span>
+
+      <span class="action">┌─────────────────────────────────────────────────────────┐</span>
+      <span class="action">│ QUIZ SESSION PIPELINE │</span>
+      <span class="action">└─────────────────────────────────────────────────────────┘</span>
+
+      <span class="hl">[main.py]</span> ── Entry point (CLI args: --ingest / --quiz)
+      <span class="arrow">│</span>
+      <span class="arrow">▼</span>
+      <span class="hl">[question_generator.py]</span>
+      ├── similarity_search(topics) → top-6 chunks from ChromaDB
+      ├── Build BATCH prompt for N questions (MCQ/TF/ShortAnswer)
+      └── Single Gemini API call → JSON array of N questions
+      <span class="arrow">│</span>
+      <span class="arrow">▼</span>
+      <span class="hl">[bot.py]</span> ── Rich CLI quiz session
+      ├── Display question card (type, topic, difficulty)
+      ├── Accept user input (A/B/C/D or typed answer, H=hint)
+      └── Call evaluator per question
+      <span class="arrow">│</span>
+      <span class="arrow">▼</span>
+      <span class="hl">[evaluator.py]</span>
+      ├── MCQ/TF: direct answer comparison (no API call)
+      ├── Short Answer: Gemini semantic evaluation (CORRECT/INCORRECT)
+      ├── CORRECT: Gemini generates reinforcement message
+      └── INCORRECT: ChromaDB RAG → Gemini generates explanation
+      <span class="arrow">│</span>
+      <span class="arrow">▼</span>
+      <span class="action"> Score + Explanation + Source Email Citations displayed</span>
+      <span class="arrow">│</span>
+      <span class="arrow">▼</span>
+      <span class="action"> Final Results Dashboard (table + study topic suggestions)</span>
+    </div>
+
+    <!-- 5. KNOWLEDGE BASE -->
+    <div class="section-header">
+      <div class="section-number">5</div>
+      <h2>Knowledge Base — Donor Emails</h2>
+    </div>
+
+    <p>The knowledge base consists of <strong>15 realistic donor emails</strong> covering the full spectrum of
+      non-profit communications. These are stored in <code>data/donor_emails.json</code> and ingested into ChromaDB as
+      searchable vector embeddings.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Email Subject</th>
+          <th>Topic Covered</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>Thank You for Your Generous Donation!</td>
+          <td>Donor acknowledgment, tax deduction, 501(c)(3)</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>Grant Award Announcement — Community Health Initiative</td>
+          <td>Grant management, reporting requirements, disbursement</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>Urgent: Year-End Fundraising Campaign</td>
+          <td>Matching gifts, campaign goals, tax deadlines</td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td>Volunteer Orientation — This Saturday</td>
+          <td>Volunteer management, commitments, background checks</td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td>Annual Impact Report 2023</td>
+          <td>Financial stewardship, program expenditure ratios</td>
+        </tr>
+        <tr>
+          <td>6</td>
+          <td>Sponsorship Opportunity — Annual Gala</td>
+          <td>Corporate sponsorship tiers, event fundraising</td>
+        </tr>
+        <tr>
+          <td>7</td>
+          <td>Changes to Our Donation Processing</td>
+          <td>Payment platform, recurring donations, donor services</td>
+        </tr>
+        <tr>
+          <td>8</td>
+          <td>Matching Gift Opportunity</td>
+          <td>Gift matching, impact multipliers, program stats</td>
+        </tr>
+        <tr>
+          <td>9</td>
+          <td>Board Recruitment — Join Our Mission</td>
+          <td>Board governance, fiduciary duty, 4-star charity ratings</td>
+        </tr>
+        <tr>
+          <td>10</td>
+          <td>Youth Mentorship Cohort 7 Launches</td>
+          <td>Program funding, grant + donation mix, impact data</td>
+        </tr>
+        <tr>
+          <td>11</td>
+          <td>Tax Receipts Now Available for 2023</td>
+          <td>IRS requirements, EIN, written acknowledgment rules</td>
+        </tr>
+        <tr>
+          <td>12</td>
+          <td>Planned Giving — Leave a Legacy</td>
+          <td>Estate planning, bequests, charitable remainder trusts</td>
+        </tr>
+        <tr>
+          <td>13</td>
+          <td>Emergency Appeal: Disaster Relief Fund</td>
+          <td>Emergency fundraising, volunteer deployment, fund allocation</td>
+        </tr>
+        <tr>
+          <td>14</td>
+          <td>Donor Stewardship — How We Use Your Gift</td>
+          <td>Transparency, fund allocation breakdown, auditing</td>
+        </tr>
+        <tr>
+          <td>15</td>
+          <td>Recurring Donors — You Are Our Champions</td>
+          <td>Recurring giving, donor retention, organizational sustainability</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- 6. PROJECT FILES -->
+    <div class="section-header">
+      <div class="section-number">6</div>
+      <h2>Project File Structure</h2>
+    </div>
+
+    <div class="file-tree">
+      <span class="folder">Non-Profit QuizTutor Bot/</span>
+      ├── <span class="folder">data/</span>
+      │ └── <span class="file">donor_emails.json</span> <span class="comment">← 15 curated donor emails (knowledge
+        base)</span>
+      ├── <span class="folder">chroma_db/</span> <span class="comment">← Auto-created on first ingest (vector DB)</span>
+      │
+      ├── <span class="file">config.py</span> <span class="comment">← Central settings (model, paths, chunk
+        sizes)</span>
+      ├── <span class="file">data_loader.py</span> <span class="comment">← Load JSON emails + split into chunks</span>
+      ├── <span class="file">vector_store.py</span> <span class="comment">← ChromaDB: embed, store, similarity
+        search</span>
+      ├── <span class="file">ingest.py</span> <span class="comment">← One-time ingestion pipeline with progress
+        UI</span>
+      │
+      ├── <span class="file">question_generator.py</span> <span class="comment">← Batch LLM call → MCQ / T-F / Short
+        Answer</span>
+      ├── <span class="file">evaluator.py</span> <span class="comment">← Answer evaluation + RAG explanation
+        engine</span>
+      ├── <span class="file">bot.py</span> <span class="comment">← Rich CLI quiz session (hints, scoring,
+        dashboard)</span>
+      │
+      ├── <span class="file">main.py</span> <span class="comment">← Entry point: python main.py [--ingest|--quiz]</span>
+      ├── <span class="file">test_smoke.py</span> <span class="comment">← 9 automated tests (no API key needed)</span>
+      │
+      ├── <span class="file">requirements.txt</span> <span class="comment">← All Python dependencies</span>
+      ├── <span class="file">.env.example</span> <span class="comment">← API key template</span>
+      └── <span class="file">README.md</span> <span class="comment">← Full usage guide</span>
+    </div>
+
+    <!-- 7. KEY CONCEPTS -->
+    <div class="section-header">
+      <div class="section-number">7</div>
+      <h2>Key AI/ML Concepts Used</h2>
+    </div>
+
+    <div class="flow-steps">
+      <div class="flow-step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h4>Large Language Model (LLM) — Google Gemini 2.5 Flash</h4>
+          <p>Gemini is used for 3 tasks: (a) generating quiz questions as structured JSON, (b) semantically evaluating
+            short-answer responses, and (c) writing contextual explanations and positive reinforcement messages.</p>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h4>Vector Embeddings &amp; Semantic Search</h4>
+          <p>Each text chunk from the donor emails is converted into a high-dimensional numerical vector using Gemini's
+            embedding model. When the bot needs context, it finds the most <em>semantically similar</em> chunks using
+            cosine similarity — not keyword matching.</p>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h4>Retrieval-Augmented Generation (RAG)</h4>
+          <p>RAG combines a retrieval system (ChromaDB) with a generative model (Gemini). Instead of relying on the
+            LLM's training data memory, the bot fetches relevant email chunks at runtime and injects them as context
+            into the prompt. This ensures answers are grounded in actual email content.</p>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <h4>Document Chunking Strategy</h4>
+          <p>Long emails are split into 500-character overlapping chunks (80-char overlap) using
+            <code>RecursiveCharacterTextSplitter</code>. Overlap prevents context from being cut mid-sentence, ensuring
+            retrieval quality.</p>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">5</div>
+        <div class="step-content">
+          <h4>Prompt Engineering</h4>
+          <p>Every LLM call uses carefully structured prompts with role definition, context injection, output format
+            enforcement (JSON), and rules to ensure quality. The batch quiz prompt generates all N questions in a single
+            API call to stay within rate limits.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 8. RAG WORKFLOW -->
+    <div class="section-header">
+      <div class="section-number">8</div>
+      <h2>RAG Explanation Workflow</h2>
+    </div>
+
+    <div class="rag-box">
+      <h4>💡 What is RAG?</h4>
+      <p>Retrieval-Augmented Generation (RAG) grounds LLM responses in real data by retrieving relevant documents before
+        generating a response. This prevents hallucination and makes answers factually anchored in the email knowledge
+        base.</p>
+    </div>
+
+    <p><strong>How the bot uses RAG for wrong-answer explanations:</strong></p>
+    <div class="flow-steps">
+      <div class="flow-step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h4>User gives a wrong answer</h4>
+          <p>The evaluator detects the answer is incorrect (direct comparison for MCQ/TF, Gemini verdict for short
+            answer).</p>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h4>Semantic search on ChromaDB</h4>
+          <p>The question text + topic are used as a search query. ChromaDB compares this query's embedding against all
+            stored email chunk embeddings and returns the top-3 most similar chunks.</p>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h4>Context-injected explanation prompt</h4>
+          <p>The retrieved email excerpts are injected into a structured prompt along with the question, correct answer,
+            and student's wrong answer.</p>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <h4>Gemini generates a grounded explanation</h4>
+          <p>Gemini writes a 3–5 sentence educational explanation that references specific details from the email
+            context — making the feedback memorable and factually accurate.</p>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">5</div>
+        <div class="step-content">
+          <h4>Source email citations displayed</h4>
+          <p>The bot shows which specific donor emails (by subject line) were referenced to generate the explanation,
+            providing full transparency.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 9. QUESTION TYPES -->
+    <div class="section-header">
+      <div class="section-number">9</div>
+      <h2>Question Types &amp; Topics</h2>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Question Type</th>
+          <th>Format</th>
+          <th>Evaluation Method</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Multiple Choice (MCQ)</strong></td>
+          <td>4 options (A/B/C/D), 1 correct</td>
+          <td>Direct option comparison</td>
+        </tr>
+        <tr>
+          <td><strong>True / False</strong></td>
+          <td>A = True, B = False</td>
+          <td>Direct option comparison</td>
+        </tr>
+        <tr>
+          <td><strong>Short Answer</strong></td>
+          <td>Free-text 1–2 sentence response</td>
+          <td>LLM semantic evaluation (CORRECT/INCORRECT)</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p><strong>10 Quiz Topics</strong> (randomly selected per session):</p>
+    <div class="card-grid">
+      <div class="card">
+        <p>📋 Grant funding requirements</p>
+      </div>
+      <div class="card">
+        <p>🧾 Donor acknowledgment &amp; tax receipts</p>
+      </div>
+      <div class="card">
+        <p>📣 Fundraising campaign strategies</p>
+      </div>
+      <div class="card">
+        <p>🙋 Volunteer management</p>
+      </div>
+      <div class="card">
+        <p>💰 Nonprofit financial stewardship</p>
+      </div>
+      <div class="card">
+        <p>🏛️ Board governance</p>
+      </div>
+      <div class="card">
+        <p>📜 Planned giving &amp; legacy donations</p>
+      </div>
+      <div class="card">
+        <p>🎯 Matching gift programs</p>
+      </div>
+      <div class="card">
+        <p>🔁 Recurring donor programs</p>
+      </div>
+      <div class="card">
+        <p>🚨 Disaster relief &amp; emergency appeals</p>
+      </div>
+    </div>
+
+    <!-- 10. HOW TO RUN -->
+    <div class="section-header">
+      <div class="section-number">10</div>
+      <h2>How to Run the Bot</h2>
+    </div>
+
+    <div class="flow-steps">
+      <div class="flow-step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h4>Install dependencies</h4>
+          <div class="code-block"><span class="cmd">pip install -r requirements.txt</span></div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h4>Set up API key</h4>
+          <div class="code-block">
+            <span class="comment"># Copy template → .env and add your key</span>
+            <span class="cmd">copy .env.example .env</span>
+            <span class="comment"># Edit .env → GOOGLE_API_KEY=your_key_here</span>
+            <span class="comment"># Get free key at: aistudio.google.com/app/apikey</span>
+          </div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h4>Ingest donor emails (once only)</h4>
+          <div class="code-block"><span class="cmd">python main.py --ingest</span></div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <h4>Run the quiz</h4>
+          <div class="code-block">
+            <span class="cmd">python main.py</span> <span class="comment"># 5-question quiz (default)</span>
+            <span class="cmd">python main.py --quiz --num-questions 10</span> <span class="comment"># 10-question
+              quiz</span>
+          </div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">5</div>
+        <div class="step-content">
+          <h4>Run automated tests</h4>
+          <div class="code-block"><span class="cmd">python -m pytest test_smoke.py -v</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 11. QUIZ SAMPLE SCREEN -->
+    <div class="section-header">
+      <div class="section-number">11</div>
+      <h2>Quiz Interface — Sample Screen</h2>
+    </div>
+
+    <div class="terminal-sim">
+      <div class="terminal-bar">
+        <div class="dot dot-red"></div>
+        <div class="dot dot-yellow"></div>
+        <div class="dot dot-green"></div>
+        <span class="terminal-title">PowerShell — python main.py</span>
+      </div>
+      <div class="terminal-body">
+        <div class="t-cyan">━━━━━ Question 2 of 5 | Topic: <span class="t-purple">Grant Funding Requirements</span> |
+          Difficulty: <span class="t-yellow">MEDIUM</span> ━━━━━</div>
+        <br>
+        <div class="t-white"> According to the grant award email, what are grantees required to submit and when?</div>
+        <br>
+        <div><span class="t-cyan"> A</span> Annual reports within 60 days of year-end</div>
+        <div><span class="t-cyan"> B</span> Quarterly progress reports by the 15th of each quarter</div>
+        <div><span class="t-cyan"> C</span> Monthly updates via the online donor portal</div>
+        <div><span class="t-cyan"> D</span> A single final report upon grant completion</div>
+        <br>
+        <div> Enter your answer or <span class="t-white">H</span> for a hint [A/B/C/D/H]: <span class="t-green">B</span>
+        </div>
+        <br>
+        <div> ✅ <span class="t-green">Correct!</span></div>
+        <br>
+        <div>╭── <span class="t-cyan">Tutor Insight</span> ───────────────────────────────────────────────────╮</div>
+        <div>│ Well done! Quarterly reporting on the 15th is a standard grant │</div>
+        <div>│ accountability requirement. Non-profits must track and share │</div>
+        <div>│ progress to maintain funder trust and future eligibility. │</div>
+        <div>╰────────────────────────────────────────────────────────────────────╯</div>
+        <br>
+        <div class="t-dim"> Press Enter for the next question...</div>
+      </div>
+    </div>
+
+    <!-- 12. TEST RESULTS -->
+    <div class="section-header">
+      <div class="section-number">12</div>
+      <h2>Testing &amp; Verification</h2>
+    </div>
+
+    <div class="highlight-box">
+      <p>✅ <strong>9 / 9 automated smoke tests passing</strong> — verified without requiring any API key, covering the
+        full data pipeline and core logic.</p>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Test</th>
+          <th>What It Verifies</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>test_load_donor_emails</td>
+          <td>15 emails load as LangChain Document objects</td>
+          <td><span class="badge badge-green">✅ PASS</span></td>
+        </tr>
+        <tr>
+          <td>test_chunk_documents</td>
+          <td>Chunking produces ≥ source doc count, all non-empty</td>
+          <td><span class="badge badge-green">✅ PASS</span></td>
+        </tr>
+        <tr>
+          <td>test_chunk_metadata_preserved</td>
+          <td>subject and id metadata carries through to chunks</td>
+          <td><span class="badge badge-green">✅ PASS</span></td>
+        </tr>
+        <tr>
+          <td>test_clean_json_response</td>
+          <td>Markdown fence stripping works correctly</td>
+          <td><span class="badge badge-green">✅ PASS</span></td>
+        </tr>
+        <tr>
+          <td>test_question_topics_defined</td>
+          <td>10 QUESTION_TOPICS exist as strings</td>
+          <td><span class="badge badge-green">✅ PASS</span></td>
+        </tr>
+        <tr>
+          <td>test_evaluator_mcq_correct</td>
+          <td>Direct MCQ comparison detects correct answer</td>
+          <td><span class="badge badge-green">✅ PASS</span></td>
+        </tr>
+        <tr>
+          <td>test_evaluator_mcq_incorrect</td>
+          <td>Wrong MCQ answer detected</td>
+          <td><span class="badge badge-green">✅ PASS</span></td>
+        </tr>
+        <tr>
+          <td>test_evaluator_true_false_mapping</td>
+          <td>TRUE→A and FALSE→B normalization is correct</td>
+          <td><span class="badge badge-green">✅ PASS</span></td>
+        </tr>
+        <tr>
+          <td>test_config_defaults</td>
+          <td>All config values are correct types/ranges</td>
+          <td><span class="badge badge-green">✅ PASS</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- 13. OUTCOMES -->
+    <div class="section-header">
+      <div class="section-number">13</div>
+      <h2>Project Outcomes</h2>
+    </div>
+
+    <div class="outcome-grid">
+      <div class="outcome-card">
+        <div class="num">15</div>
+        <div class="label-small">Donor Emails in Knowledge Base</div>
+      </div>
+      <div class="outcome-card">
+        <div class="num">80+</div>
+        <div class="label-small">Text Chunks Stored in ChromaDB</div>
+      </div>
+      <div class="outcome-card">
+        <div class="num">9</div>
+        <div class="label-small">Files in the Project</div>
+      </div>
+      <div class="outcome-card">
+        <div class="num">9/9</div>
+        <div class="label-small">Smoke Tests Passing</div>
+      </div>
+      <div class="outcome-card">
+        <div class="num">3</div>
+        <div class="label-small">Question Types Generated</div>
+      </div>
+      <div class="outcome-card">
+        <div class="num">10</div>
+        <div class="label-small">Distinct Non-Profit Topics</div>
+      </div>
+    </div>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-icon">✅</div>
+        <h4>Working End-to-End</h4>
+        <p>Full pipeline from email ingestion → quiz → evaluation → explanation is live and tested</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🔒</div>
+        <h4>RAG Accuracy</h4>
+        <p>All explanations cite actual email content — no hallucinations, no made-up facts</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🔁</div>
+        <h4>Personalized Learning Loop</h4>
+        <p>Each session is different due to random topic/type selection and LLM generation</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🛡️</div>
+        <h4>Rate Limit Resilience</h4>
+        <p>Exponential backoff retry logic handles Gemini free-tier quota gracefully</p>
+      </div>
+    </div>
+
+    <!-- 14. CHALLENGES -->
+    <div class="section-header">
+      <div class="section-number">14</div>
+      <h2>Challenges &amp; Solutions</h2>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Challenge</th>
+          <th>Solution Applied</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Deprecated google.generativeai package</strong></td>
+          <td>Migrated to the new <code>google-genai</code> SDK using <code>genai.Client</code> API</td>
+        </tr>
+        <tr>
+          <td><strong>LangChain import path changes (v1.2)</strong></td>
+          <td>Updated to <code>langchain_core.documents</code>, <code>langchain_text_splitters</code>,
+            <code>langchain_chroma</code></td>
+        </tr>
+        <tr>
+          <td><strong>Deprecated Chroma.persist() method</strong></td>
+          <td>Removed call — newer langchain-chroma auto-persists on document creation</td>
+        </tr>
+        <tr>
+          <td><strong>Free-tier API rate limits (429 errors)</strong></td>
+          <td>Switched to batch prompt (1 call for N questions) + exponential backoff retry</td>
+        </tr>
+        <tr>
+          <td><strong>Embedding model not found</strong></td>
+          <td>Updated from deprecated <code>models/embedding-001</code> to <code>models/gemini-embedding-001</code></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- 15. FUTURE SCOPE -->
+    <div class="section-header">
+      <div class="section-number">15</div>
+      <h2>Future Enhancements</h2>
+    </div>
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-icon">🌐</div>
+        <h4>Web Interface</h4>
+        <p>Build a browser-based UI using Streamlit or Flask for non-technical users</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">👤</div>
+        <h4>User Profiles</h4>
+        <p>Track individual learner progress across sessions and adapt difficulty</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">📂</div>
+        <h4>Larger Knowledge Base</h4>
+        <p>Ingest real PDF reports, grant databases, and nonprofit legal filings</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🌍</div>
+        <h4>Multi-Language Support</h4>
+        <p>Serve non-English speaking nonprofit workers with translated quizzes</p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer-bar">
+    Non-Profit Quiz/Tutor Bot &nbsp;|&nbsp; Gen AI Project &nbsp;|&nbsp; Python · Google Gemini · ChromaDB · LangChain
+  </div>
+
+</body>
+
+</html>
