@@ -8,9 +8,9 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # ─── LLM Settings ────────────────────────────────────────────────────────────
-GOOGLE_API_KEY: str = os.getenv("GOOGLE_API_KEY", "")
-LLM_MODEL: str = "gemini-2.5-flash"           # Latest Gemini model with higher free-tier quota
-EMBEDDING_MODEL: str = "models/gemini-embedding-001"  # Gemini embedding model
+GROQ_API_KEY: str = os.getenv("GROQ_API_KEY", "")
+LLM_MODEL: str = "llama-3.1-8b-instant"       # Fast, free Groq model
+EMBEDDING_MODEL: str = "all-MiniLM-L6-v2"     # Free local sentence-transformers model (no API key needed)
 
 # ─── ChromaDB Settings ───────────────────────────────────────────────────────
 CHROMA_DB_PATH: str = "./chroma_db"

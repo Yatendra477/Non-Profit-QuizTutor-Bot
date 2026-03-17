@@ -18,13 +18,13 @@ console = Console()
 
 
 def check_api_key():
-    """Validates that GOOGLE_API_KEY is set before proceeding."""
+    """Validates that GROQ_API_KEY is set before proceeding."""
     import config
-    if not config.GOOGLE_API_KEY or config.GOOGLE_API_KEY == "your_gemini_api_key_here":
+    if not config.GROQ_API_KEY or config.GROQ_API_KEY == "your_groq_api_key_here":
         console.print(
-            "\n[bold red]❌ Error:[/bold red] GOOGLE_API_KEY is not set.\n\n"
+            "\n[bold red]❌ Error:[/bold red] GROQ_API_KEY is not set.\n\n"
             "  1. Copy [bold].env.example[/bold] to [bold].env[/bold]\n"
-            "  2. Add your Gemini API key from [link]https://aistudio.google.com/app/apikey[/link]\n"
+            "  2. Add your free Groq API key from [link]https://console.groq.com/keys[/link]\n"
             "  3. Run again\n"
         )
         sys.exit(1)
@@ -89,7 +89,7 @@ def show_mode_menu() -> str:
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Non-Profit AI Learning Bot — Powered by Google Gemini + RAG",
+        description="Non-Profit AI Learning Bot — Powered by Groq + RAG",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:

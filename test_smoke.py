@@ -14,7 +14,7 @@ import pytest
 def _mock_config(monkeypatch):
     """Patch config values so tests don't need a real API key."""
     import config
-    monkeypatch.setattr(config, "GOOGLE_API_KEY", "FAKE_KEY_FOR_TESTING")
+    monkeypatch.setattr(config, "GROQ_API_KEY", "FAKE_KEY_FOR_TESTING")
     monkeypatch.setattr(config, "CHROMA_DB_PATH", "./test_chroma_db")
 
 

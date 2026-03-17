@@ -1,40 +1,36 @@
 """
-evaluator.py — Evaluates user answers using Gemini LLM.
+evaluator.py — Evaluates user answers using Groq LLM.
 Provides RAG-powered contextual explanations for incorrect answers.
-Uses the new google-genai SDK.
 """
 import time
-from typing import Dict, Any
+from typing import Dict, Any, Optional
 
-from google import genai
+from groq import Groq, RateLimitError
 
-from vector_store import similarity_search
 import config
 
-client = genai.Client(api_key=config.GOOGLE_API_KEY)
+client = Groq(api_key=config.GROQ_API_KEY)
 
 
 def _call_with_retry(prompt: str, max_retries: int = 4) -> str:
-    """Calls Gemini with exponential backoff on 429 rate-limit errors."""
-    delay = 30
+    """Calls Groq with exponential backoff on rate-limit errors."""
+    delay = 15
     for attempt in range(max_retries):
         try:
-            response = client.models.generate_content(
+            response = client.chat.completions.create(
                 model=config.LLM_MODEL,
-                contents=prompt,
+                messages=[{"role": "user", "content": prompt}],
             )
-            return response.text
-        except Exception as e:
-            err = str(e)
-            if "429" in err or "RESOURCE_EXHAUSTED" in err or "retryDelay" in err:
-                if attempt < max_retries - 1:
-                    print(f"  Rate limit hit — waiting {delay}s...")
-                    time.sleep(delay)
-                    delay = min(delay * 2, 120)
-                else:
-                    raise
+            return response.choices[0].message.content
+        except RateLimitError:
+            if attempt < max_retries - 1:
+                print(f"  Rate limit hit — waiting {delay}s...")
+                time.sleep(delay)
+                delay = min(delay * 2, 60)
             else:
                 raise
+        except Exception:
+            raise
     raise RuntimeError("Max retries exceeded")
 
 EVAL_PROMPT_SHORT_ANSWER = """You are a non-profit education tutor evaluating a student's quiz answer.
@@ -73,7 +69,7 @@ CORRECT ANSWER: {correct_answer}
 Be warm, specific, and encouraging. Do NOT start with "I"."""
 
 
-def evaluate_answer(question: Dict[str, Any], student_answer: str) -> Dict[str, Any]:
+def evaluate_answer(question: Dict[str, Any], student_answer: str, vector_store=None) -> Dict[str, Any]:
     """
     Evaluates the student's answer against the correct answer.
 
@@ -117,10 +113,18 @@ def evaluate_answer(question: Dict[str, Any], student_answer: str) -> Dict[str, 
         explanation = _call_with_retry(feedback_prompt).strip()
         source_subjects = []
     else:
-        context_docs = similarity_search(
-            query=q_text + " " + question.get("topic", ""),
-            k=config.TOP_K_RETRIEVAL,
-        )
+        # Use cached vector store if provided, else fall back to loading fresh
+        if vector_store is not None:
+            context_docs = vector_store.similarity_search(
+                q_text + " " + question.get("topic", ""),
+                k=config.TOP_K_RETRIEVAL,
+            )
+        else:
+            from vector_store import similarity_search
+            context_docs = similarity_search(
+                query=q_text + " " + question.get("topic", ""),
+                k=config.TOP_K_RETRIEVAL,
+            )
         context = "\n\n---\n\n".join([doc.page_content for doc in context_docs])
         source_subjects = [doc.metadata.get("subject", "Unknown") for doc in context_docs]
 

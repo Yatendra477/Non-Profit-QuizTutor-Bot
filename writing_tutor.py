@@ -2,14 +2,14 @@
 writing_tutor.py — Writing Tutor mode for the Non-Profit Quiz/Tutor Bot.
 
 Presents the user with a donor email writing scenario, accepts their draft,
-retrieves RAG context from ChromaDB, and evaluates their email using Gemini LLM
+retrieves RAG context from ChromaDB, and evaluates their email using Groq LLM
 with the structured evaluation prompt. Returns JSON feedback displayed in the CLI.
 """
 import json
 import time
 from typing import Dict, Any
 
-from google import genai
+from groq import Groq, RateLimitError
 from rich.console import Console
 from rich.panel import Panel
 from rich.table import Table
@@ -21,7 +21,7 @@ from vector_store import similarity_search
 import config
 
 console = Console()
-client = genai.Client(api_key=config.GOOGLE_API_KEY)
+client = Groq(api_key=config.GROQ_API_KEY)
 
 # ─── Predefined Writing Scenarios ─────────────────────────────────────────────
 SCENARIOS = [
@@ -144,26 +144,24 @@ Provide your evaluation strictly as a valid JSON object using the following stru
 
 
 def _call_with_retry(prompt: str, max_retries: int = 4) -> str:
-    """Calls Gemini with exponential backoff on 429 rate-limit errors."""
-    delay = 30
+    """Calls Groq with exponential backoff on rate-limit errors."""
+    delay = 15
     for attempt in range(max_retries):
         try:
-            response = client.models.generate_content(
+            response = client.chat.completions.create(
                 model=config.LLM_MODEL,
-                contents=prompt,
+                messages=[{"role": "user", "content": prompt}],
             )
-            return response.text
-        except Exception as e:
-            err = str(e)
-            if "429" in err or "RESOURCE_EXHAUSTED" in err or "retryDelay" in err:
-                if attempt < max_retries - 1:
-                    console.print(f"  [dim]Rate limit — waiting {delay}s...[/dim]")
-                    time.sleep(delay)
-                    delay = min(delay * 2, 120)
-                else:
-                    raise
+            return response.choices[0].message.content
+        except RateLimitError:
+            if attempt < max_retries - 1:
+                console.print(f"  [dim]Rate limit — waiting {delay}s...[/dim]")
+                time.sleep(delay)
+                delay = min(delay * 2, 60)
             else:
                 raise
+        except Exception:
+            raise
     raise RuntimeError("Max retries exceeded")
 
 
@@ -294,13 +292,17 @@ def _display_feedback(result: Dict[str, Any], scenario_title: str):
     console.print()
 
 
-def _evaluate_draft(scenario: Dict, user_draft: str) -> Dict[str, Any]:
+def _evaluate_draft(scenario: Dict, user_draft: str, vector_store=None) -> Dict[str, Any]:
     """Retrieves RAG context and evaluates the user's email draft."""
     # RAG: retrieve relevant context from donor emails
-    context_docs = similarity_search(
-        query=scenario["search_query"],
-        k=config.TOP_K_RETRIEVAL,
-    )
+    k = config.TOP_K_RETRIEVAL
+    if vector_store is not None:
+        context_docs = vector_store.similarity_search(scenario["search_query"], k=k)
+    else:
+        context_docs = similarity_search(
+            query=scenario["search_query"],
+            k=k,
+        )
     context = "\n\n---\n\n".join([doc.page_content for doc in context_docs])
 
     prompt = EVALUATION_PROMPT.format(
@@ -374,7 +376,7 @@ def run_writing_tutor():
             console.print("  [yellow]⚠ No draft entered. Skipping evaluation.[/yellow]")
         else:
             console.print(
-                "\n  [dim]⏳ Evaluating your draft with RAG + Gemini AI...[/dim]"
+                "\n  [dim]⏳ Evaluating your draft with RAG + Groq AI...[/dim]"
             )
             result = _evaluate_draft(scenario, user_draft)
             _display_feedback(result, scenario["title"])

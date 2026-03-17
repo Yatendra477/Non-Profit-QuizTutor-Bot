@@ -1,21 +1,20 @@
 """
 vector_store.py — ChromaDB wrapper for storing and retrieving donor email chunks.
-Uses Google Generative AI embeddings for semantic search.
+Uses local sentence-transformers embeddings for semantic search (no API key needed).
 """
 from typing import List
 
 from langchain_core.documents import Document
-from langchain_google_genai import GoogleGenerativeAIEmbeddings
+from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_chroma import Chroma
 
 import config
 
 
-def get_embedding_function() -> GoogleGenerativeAIEmbeddings:
-    """Returns the Gemini embedding model instance."""
-    return GoogleGenerativeAIEmbeddings(
-        model=config.EMBEDDING_MODEL,
-        google_api_key=config.GOOGLE_API_KEY,
+def get_embedding_function() -> HuggingFaceEmbeddings:
+    """Returns the local sentence-transformers embedding model instance."""
+    return HuggingFaceEmbeddings(
+        model_name=config.EMBEDDING_MODEL,
     )
 
 

@@ -1,5 +1,5 @@
 """
-question_generator.py — Generates quiz questions from donor email content using Gemini LLM.
+question_generator.py — Generates quiz questions from donor email content using Groq LLM.
 Uses a SINGLE batch API call to generate all questions at once — minimises API quota usage.
 """
 import json
@@ -7,13 +7,13 @@ import random
 import time
 from typing import List, Dict, Any
 
-from google import genai
+from groq import Groq, RateLimitError
 
 from vector_store import similarity_search
 import config
 
-# Configure new google-genai client
-client = genai.Client(api_key=config.GOOGLE_API_KEY)
+# Configure Groq client
+client = Groq(api_key=config.GROQ_API_KEY)
 
 QUESTION_TOPICS = [
     "grant funding requirements",
@@ -74,31 +74,29 @@ def _clean_json_response(text: str) -> str:
 
 def _call_with_retry(prompt: str, max_retries: int = 4) -> str:
     """
-    Calls the Gemini API with exponential backoff on 429 rate-limit errors.
+    Calls the Groq API with exponential backoff on rate-limit errors.
     """
-    delay = 30
+    delay = 15
     for attempt in range(max_retries):
         try:
-            response = client.models.generate_content(
+            response = client.chat.completions.create(
                 model=config.LLM_MODEL,
-                contents=prompt,
+                messages=[{"role": "user", "content": prompt}],
             )
-            return response.text
-        except Exception as e:
-            err = str(e)
-            if "429" in err or "RESOURCE_EXHAUSTED" in err or "retryDelay" in err:
-                if attempt < max_retries - 1:
-                    print(f"  Rate limit hit — waiting {delay}s before retry ({attempt + 1}/{max_retries - 1})...")
-                    time.sleep(delay)
-                    delay = min(delay * 2, 120)
-                else:
-                    raise
+            return response.choices[0].message.content
+        except RateLimitError:
+            if attempt < max_retries - 1:
+                print(f"  Rate limit hit — waiting {delay}s before retry ({attempt + 1}/{max_retries - 1})...")
+                time.sleep(delay)
+                delay = min(delay * 2, 60)
             else:
                 raise
+        except Exception:
+            raise
     raise RuntimeError("Max retries exceeded")
 
 
-def generate_quiz(num_questions: int = config.DEFAULT_NUM_QUESTIONS) -> List[Dict[str, Any]]:
+def generate_quiz(num_questions: int = config.DEFAULT_NUM_QUESTIONS, vector_store=None) -> List[Dict[str, Any]]:
     """
     Generates a balanced quiz in a SINGLE LLM call to minimise API quota usage.
     Returns a list of question dicts.
@@ -119,7 +117,11 @@ def generate_quiz(num_questions: int = config.DEFAULT_NUM_QUESTIONS) -> List[Dic
 
     # Gather broad context from multiple topics for richer material
     all_topics_query = " ".join(shuffled_topics[:3])
-    context_docs = similarity_search(all_topics_query, k=min(6, config.TOP_K_RETRIEVAL * 2))
+    k = min(6, config.TOP_K_RETRIEVAL * 2)
+    if vector_store is not None:
+        context_docs = vector_store.similarity_search(all_topics_query, k=k)
+    else:
+        context_docs = similarity_search(all_topics_query, k=k)
     context = "\n\n---\n\n".join([doc.page_content for doc in context_docs])
 
     prompt = BATCH_PROMPT.format(

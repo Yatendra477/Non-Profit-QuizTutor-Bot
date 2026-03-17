@@ -14,6 +14,16 @@ import config
 app = Flask(__name__)
 app.secret_key = "nonprofit-quiz-secret-2026"
 
+# ── Pre-load vector store once at startup for faster quiz generation ──────────
+_vector_store_cache = None
+
+def get_vector_store():
+    global _vector_store_cache
+    if _vector_store_cache is None:
+        from vector_store import load_vector_store
+        _vector_store_cache = load_vector_store()
+    return _vector_store_cache
+
 # ── Inline HTML template ──────────────────────────────────────────────────────
 HTML = r"""<!DOCTYPE html>
 <html lang="en">
@@ -114,7 +124,7 @@ select:focus{outline:none;border-color:#3b82f6;}
   <button class="nav-btn" onclick="showPage('quiz-setup')">📝 Quiz Mode</button>
   <button class="nav-btn" onclick="showPage('tutor-setup')">✍️ Writing Tutor</button>
   <div class="sidebar-footer">
-    Powered by<br>Google Gemini + ChromaDB<br>LangChain · Flask · Python
+    Non-Profit Quiz/Tutor Bot
   </div>
 </div>
 
@@ -143,7 +153,7 @@ select:focus{outline:none;border-color:#3b82f6;}
     <div class="info-item"><div class="num">3</div><div class="lbl">Question Types</div></div>
     <div class="info-item"><div class="num">6</div><div class="lbl">Writing Scenarios</div></div>
   </div>
-  <div class="info-strip">🔗 How it works: Donor emails are embedded into ChromaDB → Gemini retrieves relevant chunks (RAG) → Generates questions / evaluates your email → Returns grounded, factual feedback.</div>
+  <div class="info-strip">🔗 How it works: Donor emails are embedded into ChromaDB → Groq AI retrieves relevant chunks (RAG) → Generates questions / evaluates your email → Returns grounded, factual feedback.</div>
 </div>
 
 <!-- ════ QUIZ SETUP ════ -->
@@ -156,7 +166,7 @@ select:focus{outline:none;border-color:#3b82f6;}
     <p>Questions: <strong id="num-q-val">5</strong></p>
   </div>
   <div class="card card-blue">
-    <p>Mix of Multiple Choice, True/False, and Short Answer questions — generated fresh from the donor email knowledge base using Gemini AI.</p>
+    <p>Mix of Multiple Choice, True/False, and Short Answer questions — generated fresh from the donor email knowledge base using Groq AI.</p>
   </div>
   <div class="btn-row">
     <button class="btn btn-primary" onclick="startQuiz()"><span id="quiz-gen-spinner" class="spinner hidden"></span>🚀 Generate &amp; Start Quiz</button>
@@ -492,7 +502,8 @@ def api_generate_quiz():
         data = request.get_json()
         num_q = int(data.get("num_questions", 5))
         from question_generator import generate_quiz
-        questions = generate_quiz(num_questions=num_q)
+        # Pass the cached store so it doesn't reload the embedding model
+        questions = generate_quiz(num_questions=num_q, vector_store=get_vector_store())
         return jsonify({"questions": questions})
     except Exception as e:
         return jsonify({"error": str(e)}), 500
@@ -505,7 +516,7 @@ def api_evaluate():
         question = data["question"]
         user_answer = data["user_answer"]
         from evaluator import evaluate_answer
-        result = evaluate_answer(question, user_answer)
+        result = evaluate_answer(question, user_answer, vector_store=get_vector_store())
         return jsonify(result)
     except Exception as e:
         return jsonify({"error": str(e)}), 500
@@ -518,7 +529,7 @@ def api_evaluate_draft():
         scenario = data["scenario"]
         draft = data["draft"]
         from writing_tutor import _evaluate_draft
-        result = _evaluate_draft(scenario, draft)
+        result = _evaluate_draft(scenario, draft, vector_store=get_vector_store())
         return jsonify(result)
     except Exception as e:
         return jsonify({"error": str(e)}), 500
@@ -530,6 +541,10 @@ if __name__ == "__main__":
         print("Vector DB not found — running ingestion first...")
         from ingest import run_ingestion
         run_ingestion()
+    # Pre-warm the vector store so first quiz is fast
+    print("\n⏳ Loading vector store...")
+    get_vector_store()
+    print("✅ Vector store ready!")
     print("\n🎓 Non-Profit Quiz/Tutor Bot is running!")
     print("   Open your browser at: http://localhost:5000\n")
     app.run(debug=False, port=5000, host="0.0.0.0")
