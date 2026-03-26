@@ -167,6 +167,10 @@ def _call_with_retry(prompt: str, max_retries: int = 4) -> str:
 
 def _clean_json(text: str) -> str:
     text = text.strip()
+    start = text.find('{')
+    end = text.rfind('}')
+    if start != -1 and end != -1 and end > start:
+        return text[start:end+1]
     if text.startswith("```"):
         lines = text.split("\n")
         lines = [l for l in lines if not l.startswith("```")]
@@ -313,7 +317,7 @@ def _evaluate_draft(scenario: Dict, user_draft: str, vector_store=None) -> Dict[
 
     raw = _clean_json(_call_with_retry(prompt))
     try:
-        return json.loads(raw)
+        return json.loads(raw, strict=False)
     except json.JSONDecodeError:
         return {
             "score_out_of_10": 0,
